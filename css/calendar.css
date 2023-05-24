@@ -1,0 +1,64 @@
+:root {
+    --skyblue: rgba(128, 172, 247, 0.5);
+}
+
+td {
+    width: 45px;
+    height: 45px;
+}
+
+.Calendar {
+    text-align: center;
+    margin: 0 auto;
+    position: absolute;
+    top: 10%;
+    background-color: white;
+    border-collapse: collapse; /* 겹치는 경계선 제거 */
+    border: 1px solid rgba(194, 211, 246, 0.743); /* 테두리 스타일 지정 */
+    box-shadow: 0 0px 50px rgba(0, 0, 0, 0.1);
+}
+
+.Calendar > thead > .menu > td {
+    font-weight: bold;
+}
+
+.Calendar > thead > .day > td {
+    background-color: rgba(173, 198, 247, 0.87);
+    color: white;
+}
+
+.Calendar > tbody > tr > td {
+    cursor: pointer;
+    border-radius: 50%;
+    &:hover {
+        background-color: rgba(126, 129, 139, 0.3);
+    }
+}
+
+.pastDay {
+    color: gray;
+}
+.sunday {
+    color: red;
+}
+.saturday {
+    color: blue;
+}
+.pastDay.sunday,
+.pastDay.saturday {
+    color: gray;
+}
+
+.today {
+    background-color: rgba(247, 231, 151, 0.4);
+}
+
+.choiceDay {
+    background-color: var(--skyblue);
+    color: #fff;
+}
+
+.pastDay.choiceDay {
+    background-color: rgba(128, 172, 247, 0.5);
+    color: #fff;
+}

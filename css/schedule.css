@@ -1,0 +1,60 @@
+:root {
+    --skyblue: rgba(128, 172, 247, 0.5);
+    font-family: Helvetica, sans-serif;
+}
+.today-schedule-title {
+    font-size: 32px;
+}
+.addCategoryBtn {
+    width: 100px;
+    height: 40px;
+    right: 0%;
+    border: 1px solid;
+    border-radius: 20px;
+    background-color: var(--skyblue);
+    box-shadow: 0 0px 10px rgba(0, 0, 0, 0.1);
+    margin: 32px;
+    padding: 0px;
+    color: #fff;
+    &:hover {
+        background-color: #fff;
+        color: var(--skyblue);
+    }
+}
+.CategoryList {
+    top: 60px;
+    height: 600px;
+    width: 100%;
+    border-radius: 25px;
+    border: 1px solid rgba(128, 128, 128, 0.2);
+    overflow-y: scroll;
+}
+.CategoryList > .CategoryItem {
+    background-color: var(--skyblue);
+    border-radius: 15px;
+}
+.CategoryList::-webkit-scrollbar {
+    display: none;
+}
+
+.categoryTitleDiv > p {
+    margin: 0px;
+    padding-left: 10px;
+    padding-top: 5px;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.scheduleListDiv {
+    margin-bottom: 10px;
+}
+
+.scheduleListDiv > p {
+    padding-left: 5%;
+    padding-top: 1%;
+    margin: 0px;
+}
+
+.category-container-title {
+    display: flex;
+}

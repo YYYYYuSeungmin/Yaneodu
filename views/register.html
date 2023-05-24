@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <link rel="stylesheet" href="/css/auth.css" />
+        <title>Register</title>
+    </head>
+    <body>
+        <div id="auth-page">
+            <div class="auth-divPosition registerDiv">
+                <div class="divInner">
+                    <h1>Register</h1>
+                    <br />
+                    <form action="/auth/register_process" method="post">
+                        <input
+                            type="text"
+                            name="id"
+                            placeholder="ID"
+                            required
+                        />
+                        <input
+                            type="password"
+                            name="pw"
+                            placeholder="Password"
+                            required
+                        />
+                        <input
+                            type="text"
+                            name="name"
+                            placeholder="Name"
+                            required
+                        />
+                        <input
+                            type="text"
+                            name="email"
+                            placeholder="Email"
+                            required
+                        />
+                        <input
+                            type="text"
+                            name="nickname"
+                            placeholder="NickName"
+                            required
+                        />
+
+                        <button
+                            type="button"
+                            class="button leftButton"
+                            onClick="location.href='/main'"
+                        >
+                            돌아가기
+                        </button>
+                        <button class="button rightButton" type="submit">
+                            가입하기
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

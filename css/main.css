@@ -1,0 +1,54 @@
+:root {
+    --skyblue: rgba(128, 172, 247, 0.5);
+}
+.mainScreen {
+    width: 60%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 20%;
+    background: #fff;
+    border-right: 1px solid #ccc;
+    border-left: 1px solid #ccc;
+    padding: 0px;
+}
+
+.profile-container {
+    position: absolute;
+    display: flex;
+    width: 70%;
+    height: 10%;
+    top: 2%;
+    left: 15%;
+    border-bottom: 1px rgba(128, 128, 128, 0.6);
+}
+.profile-icon {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background-color: lightskyblue;
+}
+.profile-userName {
+    width: 300px;
+    height: 80px;
+    padding-left: 20px;
+}
+
+.calendar-container {
+    position: absolute;
+    width: 70%;
+    height: 30%;
+    top: 12%;
+    left: 15%;
+    display: grid;
+    align-items: center;
+    gap: 20px;
+}
+
+.schedule-container {
+    position: absolute;
+    width: 70%;
+    height: 50%;
+    top: 40%;
+    left: 15%;
+}

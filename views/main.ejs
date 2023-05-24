@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <script
+            tpye="text/JavaScript"
+            src="https://code.jquery.com/jquery-3.6.0.min.js"
+        ></script>
+        <link rel="stylesheet" href="/css/sidebar.css" />
+        <link rel="stylesheet" href="/css/main.css" />
+        <link rel="stylesheet" href="/css/categoryModal.css" />
+        <link rel="stylesheet" href="/css/calendar.css" />
+        <link rel="stylesheet" href="/css/schedule.css" />
+
+        <title>Main</title>
+    </head>
+    <body>
+        <div class="menuBar">
+            <a href="/main"><img class="logo" src="/img/yaneodu_logo.png" /></a>
+            <hr color="lightgray" width="80%" />
+            <nav>
+                <ul>
+                    <li>
+                        <a class="selected" href="/main" id="home">홈</a>
+                    </li>
+                    <!-- 일정 둘러보기와 일기 둘러보기는 다른 페이지 생성 예정. -->
+                    <li>
+                        <a href="/main/lookSchedule" id="lookSchedule"
+                            >일정 둘러보기</a
+                        >
+                    </li>
+                    <li>
+                        <a href="/main/lookDiary" id="lookDiary"
+                            >일기 둘러보기</a
+                        >
+                    </li>
+                </ul>
+            </nav>
+        </div>
+
+        <div class="followList">
+            <nav>
+                <h1>팔로우 목록</h1>
+                <hr width="80%" />
+                <p>팔로우 목록이 여기에 표시됩니다.</p>
+            </nav>
+        </div>
+
+        <div class="mainScreen">
+            <div class="profile-container">
+                <span><button class="profile-icon"></button></span>
+                <span><h1 class="profile-userName"><%= userNick %></h1></span>
+            </div>
+            <div class="calendar-container">
+                <table class="Calendar">
+                    <thead>
+                        <tr class="menu">
+                            <td
+                                onClick="prevCalendar();"
+                                style="cursor: pointer"
+                            >
+                                &#60;
+                            </td>
+                            <td colspan="5">
+                                <span id="calYear"></span>년
+                                <span id="calMonth"></span>월
+                            </td>
+                            <td
+                                onClick="nextCalendar();"
+                                style="cursor: pointer"
+                            >
+                                &#62;
+                            </td>
+                        </tr>
+                        <tr class="day">
+                            <td>일</td>
+                            <td>월</td>
+                            <td>화</td>
+                            <td>수</td>
+                            <td>목</td>
+                            <td>금</td>
+                            <td>토</td>
+                        </tr>
+                    </thead>
+
+                    <tbody></tbody>
+                </table>
+            </div>
+            <form action="/auth/logout" method="get">
+                <p class="welcomeMsg"><%= userNick %>님 환영합니다!</p>
+                <button type="submit" class="logoutBtn">로그아웃</button>
+            </form>
+
+            <div class="schedule-container">
+                <div id="category-modal" class="modal">
+                    <div class="modal-content">
+                        <form action="/schedule/addCategory" method="post">
+                            <span class="category-modal-close">&times;</span>
+                            <h1>카테고리 추가</h1>
+                            <input
+                                type="text"
+                                id="category-title"
+                                name="title"
+                                placeholder="카테고리 명"
+                                class="inputCategory"
+                                required
+                            />
+                            <button
+                                type="submit"
+                                id="submit-category"
+                                class="enterBtn"
+                            >
+                                등록
+                            </button>
+                        </form>
+                    </div>
+                </div>
+                <div class="category-container-title">
+                    <p
+                        id="today-schedule-title"
+                        class="today-schedule-title"
+                    ></p>
+                    <button id="category-modal-btn" class="addCategoryBtn">
+                        카테고리 추가
+                    </button>
+                </div>
+
+                <div id="category-list" class="CategoryList"></div>
+            </div>
+        </div>
+        <script>
+            // userId와 userName 정보를 JavaScript 변수에 저장
+            let userId = "<%= userId %>";
+            let userNick = "<%= userNick %>";
+
+            // getCategoryList(userId);
+        </script>
+        <script src="/views/components/categoryModal.js"></script>
+        <script src="/views/components/calendar.js"></script>
+        <script src="/views/components/category.js"></script>
+    </body>
+</html>
