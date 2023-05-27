@@ -38,13 +38,27 @@ exports.getCategoryList = function (req, res) {
                 return;
             }
             // 결과 처리 로직
-            console.log("Category list:", results);
+            // console.log("Category list:", results);
 
             res.json(results);
         }
     );
 };
 
-// getScheduleList 요청
-//
-// exports.getScheduleList = function ([uId, categoryNum], req, res) {};
+// /getScheduleList
+exports.getScheduleList = function (req, res) {
+    const categoryID = req.body.categoryID;
+
+    db.query(
+        "SELECT * FROM SCHEDULE WHERE category_id = ?",
+        [categoryID],
+        (error, results) => {
+            if (error) {
+                console.error("Error retrieving schedule list: ", error);
+                return;
+            }
+
+            res.json(results);
+        }
+    );
+};

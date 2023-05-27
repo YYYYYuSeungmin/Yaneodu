@@ -8,4 +8,7 @@ router.post("/addCategory", scheduleController.insertCategory);
 // getCategoryList
 router.post("/getCategoryList", scheduleController.getCategoryList);
 
+// getScheduleList
+router.post("/getScheduleList", scheduleController.getScheduleList);
+
 module.exports = router;

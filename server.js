@@ -10,8 +10,8 @@ const ejs = require("ejs");
 const path = require("path");
 
 //라우터 모듈 가져오기
-const auth = require("./routes/auth.js");
-const schedule = require("./routes/schedule.js");
+const auth = require("./routes/authRoutes.js");
+const schedule = require("./routes/scheduleRoutes.js");
 const FileStore = require("session-file-store")(session);
 
 //ejs 파일 설정
