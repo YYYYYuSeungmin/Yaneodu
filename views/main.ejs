@@ -8,7 +8,7 @@
         ></script>
         <link rel="stylesheet" href="/css/sidebar.css" />
         <link rel="stylesheet" href="/css/main.css" />
-        <link rel="stylesheet" href="/css/categoryModal.css" />
+        <link rel="stylesheet" href="/css/modal.css" />
         <link rel="stylesheet" href="/css/calendar.css" />
         <link rel="stylesheet" href="/css/schedule.css" />
 
@@ -92,17 +92,20 @@
             </form>
 
             <div class="schedule-container">
+                <!-- 카테고리 추가 Modal창 -->
                 <div id="category-modal" class="modal">
                     <div class="modal-content">
                         <form action="/schedule/addCategory" method="post">
-                            <span class="category-modal-close">&times;</span>
+                            <span id="categoryClose" class="close"
+                                >&times;</span
+                            >
                             <h1>카테고리 추가</h1>
                             <input
                                 type="text"
                                 id="category-title"
                                 name="title"
                                 placeholder="카테고리 명"
-                                class="inputCategory"
+                                class="inputTitle"
                                 required
                             />
                             <button
@@ -124,7 +127,6 @@
                         카테고리 추가
                     </button>
                 </div>
-
                 <div id="category-list" class="CategoryList"></div>
             </div>
         </div>
@@ -132,11 +134,13 @@
             // userId와 userName 정보를 JavaScript 변수에 저장
             let userId = "<%= userId %>";
             let userNick = "<%= userNick %>";
-
-            // getCategoryList(userId);
         </script>
         <script src="/views/components/categoryModal.js"></script>
         <script src="/views/components/calendar.js"></script>
         <script src="/views/components/category.js"></script>
+        <!-- <script src="/views/components/schedule.js"></script> -->
+        <script>
+            getCategoryList();
+        </script>
     </body>
 </html>

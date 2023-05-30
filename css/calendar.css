@@ -35,19 +35,19 @@ td {
     }
 }
 
-.pastDay {
+/* .pastDay {
     color: gray;
-}
+} */
 .sunday {
     color: red;
 }
 .saturday {
     color: blue;
 }
-.pastDay.sunday,
+/* .pastDay.sunday,
 .pastDay.saturday {
     color: gray;
-}
+} */
 
 .today {
     background-color: rgba(247, 231, 151, 0.4);

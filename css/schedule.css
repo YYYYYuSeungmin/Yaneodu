@@ -32,17 +32,25 @@
 .CategoryList > .CategoryItem {
     background-color: var(--skyblue);
     border-radius: 15px;
+    margin-bottom: 15px;
 }
 .CategoryList::-webkit-scrollbar {
     display: none;
 }
 
+.categoryTitleDiv {
+    display: flex;
+    align-items: center;
+}
 .categoryTitleDiv > p {
     margin: 0px;
     padding-left: 10px;
     padding-top: 5px;
     font-size: 28px;
     font-weight: bold;
+}
+.categoryTitleDiv > button {
+    font-size: 20px;
 }
 
 .scheduleListDiv {
@@ -87,7 +95,7 @@
     padding-right: 2%;
 }
 
-.scheduleCtrlBtn {
+.Btn {
     width: 60px;
     height: 30px;
     border: 1px solid;
@@ -99,4 +107,18 @@
         background-color: #fff;
         color: var(--skyblue);
     }
+}
+
+.ctgBtn {
+    width: 40px;
+    font-size: 18px;
+    margin-left: 2%;
+}
+
+.addScheduleBtn {
+    width: 40px;
+    height: 40px;
+    font-size: 18px;
+    font-weight: bold;
+    margin-left: 5%;
 }

@@ -28,7 +28,31 @@ body {
     position: relative;
 }
 
-.inputCategory {
+.update-schedule.modal-content {
+    height: 15%;
+}
+
+.deleteBtn,
+.editBtn {
+    width: 100%;
+    height: 50px;
+    font-size: 16px;
+    border: 1px solid;
+    border-radius: 20px;
+    margin-bottom: 5%;
+    background-color: var(--skyblue);
+    box-shadow: 0 0px 10px rgba(0, 0, 0, 0.1);
+    color: #fff;
+}
+
+.deleteBtn:hover,
+.editBtn:hover {
+    &:hover {
+        background-color: #fff;
+        color: var(--skyblue);
+    }
+}
+.inputTitle {
     border: none;
     border-bottom: 1px solid var(--skyblue);
     border-radius: 0;

@@ -5,7 +5,7 @@ const modal = document.getElementById("category-modal");
 const modalBtn = document.getElementById("category-modal-btn");
 
 // 닫기 버튼 가져오기 id=close
-const closeBtn = document.getElementsByClassName("category-modal-close")[0];
+const closeBtn = document.getElementById("categoryClose");
 
 // inputText
 const inputText = document.getElementById("category-title");
@@ -26,10 +26,3 @@ window.addEventListener("click", function (event) {
         modal.style.display = "none";
     }
 });
-
-// 등록 버튼 눌렀을 때 처리하는 함수
-// const submitBtn = document.getElementById("submit-category");
-// submitBtn.addEventListener("click", function () {
-//     inputText.value = "";
-//     modal.style.display = "none";
-// });
