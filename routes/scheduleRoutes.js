@@ -20,4 +20,10 @@ router.post("/updateCategory", scheduleController.updateCategory);
 // insertSchedule
 router.post("/insertSchedule", scheduleController.insertSchedule);
 
+// deleteSchedule
+router.post("/deleteSchedule", scheduleController.deleteSchedule);
+
+// updateSchedule
+router.post("updateSchedule", scheduleController.updateSchedule);
+
 module.exports = router;

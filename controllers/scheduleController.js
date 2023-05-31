@@ -123,3 +123,40 @@ exports.insertSchedule = function (req, res) {
         }
     );
 };
+
+// deleteSchedule
+exports.deleteSchedule = function (req, res) {
+    const scheduleID = req.body.scheduleID;
+
+    db.query(
+        "DELETE FROM schedule WHERE schedule_id = ?",
+        [scheduleID],
+        (error, results) => {
+            if (error) {
+                console.error("schedule delete error!!");
+                return;
+            }
+
+            res.json({ message: "DELETE schedule SUCCESS" });
+        }
+    );
+};
+
+// updateSchedule
+exports.updateSchedule = function (req, res) {
+    const scheduleID = req.body.scheduleID;
+    const newContent = req.body.newContentl;
+
+    db.query(
+        "UPDATE schedune SET schedule = ? WHERE schedule_id = ?",
+        [newContent, scheduleID],
+        (error, results) => {
+            if (error) {
+                console.error("schedule update error!!");
+                return;
+            }
+
+            res.json({ message: "UPDATE schedule SUCCESS" });
+        }
+    );
+};

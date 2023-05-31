@@ -1,0 +1,18 @@
+*{
+    box-sizing: border-box;
+    font-family: 'Noto Sans KR', sans-serif;
+}
+
+body {
+    margin: 0;
+    background-color: white;
+}
+
+.text-field {
+    font-size: 14px;
+}
+
+.submit-btn {
+    font-size: 14px;
+
+}

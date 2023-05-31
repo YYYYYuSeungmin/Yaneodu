@@ -175,7 +175,7 @@ function drawCategory(data) {
                     scheduleControllButton.addEventListener(
                         "click",
                         function () {
-                            createUpdateScheduleModal();
+                            createUpdateScheduleModal(scheduleList[j]);
                         }
                     );
                     controllButtonDiv.appendChild(scheduleControllButton);
