@@ -85,7 +85,7 @@ function createInputModifyScheduleModal(schedule) {
 
     //외부를 클릭하면 모달 창 닫기
     modifyModal.addEventListener("click", function (event) {
-        if (event.target === updateModal) {
+        if (event.target === modifyModal) {
             modifyModalContent.remove();
             modifyModal.remove();
         }

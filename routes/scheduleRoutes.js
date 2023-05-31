@@ -24,6 +24,6 @@ router.post("/insertSchedule", scheduleController.insertSchedule);
 router.post("/deleteSchedule", scheduleController.deleteSchedule);
 
 // updateSchedule
-router.post("updateSchedule", scheduleController.updateSchedule);
+router.post("/updateSchedule", scheduleController.updateSchedule);
 
 module.exports = router;

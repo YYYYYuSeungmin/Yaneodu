@@ -145,14 +145,14 @@ exports.deleteSchedule = function (req, res) {
 // updateSchedule
 exports.updateSchedule = function (req, res) {
     const scheduleID = req.body.scheduleID;
-    const newContent = req.body.newContentl;
-
+    const newContent = req.body.newContent;
+    console.log(scheduleID, newContent);
     db.query(
-        "UPDATE schedune SET schedule = ? WHERE schedule_id = ?",
+        "UPDATE schedule SET schedule = ? WHERE schedule_id = ?",
         [newContent, scheduleID],
         (error, results) => {
             if (error) {
-                console.error("schedule update error!!");
+                console.error("schedule update error!!" + ", " + error);
                 return;
             }
 
