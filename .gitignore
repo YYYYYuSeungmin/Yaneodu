@@ -38,6 +38,7 @@ bower_components
 
 # Session
 session/*
+.session/*
 
 # node-waf configuration
 .lock-wscript

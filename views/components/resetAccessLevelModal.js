@@ -96,6 +96,7 @@ function resetAccessLevel(schedule) {
     updateBtn.id = "submit-updateCategory";
     updateBtn.classList.add("enterBtn");
     updateBtn.innerText = "완료";
+    updateBtn.classList.add("rightBtn");
 
     updateBtn.addEventListener("click", function () {
         $.ajax({
