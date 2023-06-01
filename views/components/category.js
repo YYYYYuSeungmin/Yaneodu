@@ -141,12 +141,15 @@ function drawCategory(data) {
                     let checkBox = document.createElement("input");
                     checkBox.type = "checkbox";
                     checkBox.classList.add("checkBox");
+                    if (scheduleList[j].is_completed) {
+                        checkBox.checked = true;
+                    }
                     //체크박스 이벤트리스너 지정
                     checkBox.addEventListener("click", function () {
-                        let flag = false;
+                        let flag = 0; // 0:false, 1:true
                         let scheduleID = scheduleList[j].schedule_id;
                         if (checkBox.checked) {
-                            flag = true;
+                            flag = 1;
                         }
                         //해당 경로로 체크여부 데이터 전송 따로 응답받지는 않음
                         $.ajax({

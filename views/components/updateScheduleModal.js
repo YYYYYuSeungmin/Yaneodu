@@ -1,3 +1,8 @@
+//recurringScheduleModal.js 로드
+const recurringScheduleModal = document.createElement("script");
+recurringScheduleModal.src = "/views/components/recurringScheduleModal.js";
+document.head.appendChild(recurringScheduleModal);
+
 //각 일정별로 수정 삭제 기한설정
 function createUpdateScheduleModal(schedule) {
     //모달 검은 영역 최상위 container
@@ -54,6 +59,12 @@ function createUpdateScheduleModal(schedule) {
     const setRepeatBtn = document.createElement("button");
     setRepeatBtn.innerText = "반복 기간 설정하기";
     setRepeatBtn.classList.add("editBtn");
+    setRepeatBtn.addEventListener("click", function () {
+        updateScheduleModalContent.remove();
+        updateScheduleModal.remove();
+
+        createRecurringScheduleModal(schedule);
+    });
 
     updateScheduleModalContent.appendChild(updateScheduleModifyBtn);
     updateScheduleModalContent.appendChild(updateScheduleDeleteBtn);

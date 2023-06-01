@@ -32,6 +32,10 @@ body {
     height: 15%;
 }
 
+.recurring-schedule.modal-content {
+    height: 24%;
+}
+
 .deleteBtn,
 .editBtn {
     width: 100%;
@@ -78,6 +82,11 @@ body {
         background-color: #fff;
         color: var(--skyblue);
     }
+}
+
+.rightBtn {
+    position: absolute;
+    right: 5%;
 }
 
 /* 닫기 버튼 스타일 */

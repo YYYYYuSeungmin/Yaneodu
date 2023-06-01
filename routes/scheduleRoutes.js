@@ -26,4 +26,7 @@ router.post("/deleteSchedule", scheduleController.deleteSchedule);
 // updateSchedule
 router.post("/updateSchedule", scheduleController.updateSchedule);
 
+//router.scheduleCheckBox
+router.post("/scheduleCheckBox", scheduleController.scheduleCheckBox);
+
 module.exports = router;

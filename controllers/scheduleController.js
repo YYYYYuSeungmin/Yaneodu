@@ -146,7 +146,7 @@ exports.deleteSchedule = function (req, res) {
 exports.updateSchedule = function (req, res) {
     const scheduleID = req.body.scheduleID;
     const newContent = req.body.newContent;
-    console.log(scheduleID, newContent);
+
     db.query(
         "UPDATE schedule SET schedule = ? WHERE schedule_id = ?",
         [newContent, scheduleID],
@@ -157,6 +157,26 @@ exports.updateSchedule = function (req, res) {
             }
 
             res.json({ message: "UPDATE schedule SUCCESS" });
+        }
+    );
+};
+
+// scheduleCheckBox
+exports.scheduleCheckBox = function (req, res) {
+    const scheduleID = req.body.scheduleID;
+    const check = req.body.check;
+
+    console.log("checkBox Test :" + scheduleID + check);
+    db.query(
+        "UPDATE schedule SET is_completed = ? WHERE schedule_id = ?",
+        [check, scheduleID],
+        (error, results) => {
+            if (error) {
+                console.error("schedule checkBox error!!" + ", " + error);
+                return;
+            }
+
+            res.json({ message: "schedule checkBox call success" });
         }
     );
 };
