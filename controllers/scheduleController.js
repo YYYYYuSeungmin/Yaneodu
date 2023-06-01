@@ -180,3 +180,66 @@ exports.scheduleCheckBox = function (req, res) {
         }
     );
 };
+
+// recurringSchedule
+exports.recurringSchedule = function (req, res) {
+    console.log("RRRRRRRRRRRRRRRRRR");
+
+    const scheduleID = req.body.scheduleID;
+
+    const sYear = req.body.startYear;
+    const sMonth = req.body.startMonth;
+    const sDay = req.body.startDay;
+
+    const eYear = req.body.endYear;
+    const eMonth = req.body.endMonth;
+    const eDay = req.body.endDay;
+
+    console.log("recurringSchedule : " + sYear + sMonth + sDay);
+
+    const startDate = formattedDate(sYear, sMonth - 1, sDay);
+    const endDate = formattedDate(eYear, eMonth - 1, eDay);
+
+    db.query(
+        "UPDATE schedule SET start_date = ?, end_date = ? where schedule_id = ?",
+        [startDate, endDate, scheduleID],
+        (error, results) => {
+            if (error) {
+                console.error("recurring schedule error!!" + ", " + error);
+                return;
+            }
+
+            res.json({ message: "recurring schedule call success" });
+        }
+    );
+};
+
+function formattedDate(year, month, day) {
+    const newDate = new Date(
+        parseInt(year),
+        parseInt(month),
+        parseInt(day) + 1
+    );
+
+    const mysqlFormattedDate = newDate.toISOString().slice(0, 10); // 'YYYY-MM-DD' 형식으로 변환
+
+    return mysqlFormattedDate;
+}
+
+exports.resetAccessLevel = function (req, res) {
+    const scheduleID = req.body.scheduleID;
+    const accessLevel = req.body.accessLevel;
+
+    db.query(
+        "UPDATE schedule SET visibility = ? where schedule_id = ?",
+        [accessLevel, scheduleID],
+        (error, results) => {
+            if (error) {
+                console.error("reset accesslevel error!!" + ", " + error);
+                return;
+            }
+
+            res.json({ message: "reset accesslevel call success" });
+        }
+    );
+};

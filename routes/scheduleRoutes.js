@@ -29,4 +29,10 @@ router.post("/updateSchedule", scheduleController.updateSchedule);
 //router.scheduleCheckBox
 router.post("/scheduleCheckBox", scheduleController.scheduleCheckBox);
 
+// router.recurringSchedule
+router.post("/recurringSchedule", scheduleController.recurringSchedule);
+
+// router.resetAccessLevel
+router.post("/resetAccessLevel", scheduleController.resetAccessLevel);
+
 module.exports = router;

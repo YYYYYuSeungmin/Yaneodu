@@ -1,3 +1,7 @@
+//resetAccessLevelModal.js 로드
+const accessLevelModalScript = document.createElement("script");
+accessLevelModalScript.src = "/views/components/resetAccessLevelModal.js";
+document.head.appendChild(accessLevelModalScript);
 //recurringScheduleModal.js 로드
 const recurringScheduleModal = document.createElement("script");
 recurringScheduleModal.src = "/views/components/recurringScheduleModal.js";
@@ -66,9 +70,21 @@ function createUpdateScheduleModal(schedule) {
         createRecurringScheduleModal(schedule);
     });
 
+    // 공개 범위 재설정
+    const modifyAccessLevelBtn = document.createElement("button");
+    modifyAccessLevelBtn.innerText = "공개 범위 설정";
+    modifyAccessLevelBtn.classList.add("editBtn");
+    modifyAccessLevelBtn.addEventListener("click", function () {
+        updateScheduleModalContent.remove();
+        updateScheduleModal.remove();
+
+        resetAccessLevel(schedule);
+    });
+
     updateScheduleModalContent.appendChild(updateScheduleModifyBtn);
     updateScheduleModalContent.appendChild(updateScheduleDeleteBtn);
     updateScheduleModalContent.appendChild(setRepeatBtn);
+    updateScheduleModalContent.appendChild(modifyAccessLevelBtn);
 
     updateScheduleModal.appendChild(updateScheduleModalContent);
 

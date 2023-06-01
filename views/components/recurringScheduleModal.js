@@ -1,4 +1,5 @@
 function createRecurringScheduleModal(schedule) {
+    const scheduleID = schedule.schedule_id;
     //모달 검은 영역 최상위 container
     const modal = document.createElement("div");
     modal.classList.add("modal");
@@ -104,6 +105,38 @@ function createRecurringScheduleModal(schedule) {
     enterBtn.innerText = "완료";
     enterBtn.classList.add("enterBtn");
     enterBtn.classList.add("rightBtn");
+    //완료 이벤트 리스너
+    enterBtn.addEventListener("click", function () {
+        const startYear = startYearSelect.value;
+        const startMonth = startMonthSelect.value;
+        const startDay = startDaySelect.value;
+
+        const endYear = endYearSelect.value;
+        const endMonth = endMonthSelect.value;
+        const endDay = endDaySelect.value;
+
+        $.ajax({
+            url: "/schedule/recurringSchedule",
+            method: "POST",
+            dataType: "json",
+            data: {
+                startYear: startYear,
+                startMonth: startMonth,
+                startDay: startDay,
+                endYear: endYear,
+                endMonth: endMonth,
+                endDay: endDay,
+                scheduleID: scheduleID,
+            },
+        })
+            .done(function () {
+                location.reload();
+            })
+            .fail(function (xhr, status, errorThrown) {
+                alert("recurring Schedule Fail");
+            });
+    });
+
     contentDiv.appendChild(enterBtn);
 
     modalContent.appendChild(titleDiv);
