@@ -93,7 +93,18 @@ function choiceDate(nowColumn) {
             .classList.remove("choiceDay"); // 해당 날짜의 "choiceDay" class 제거
     }
     nowColumn.classList.add("choiceDay"); // 선택된 날짜에 "choiceDay" class 추가
+
     showSelectDate(selectDay); //schedule 오늘의 일정 에 날짜 변경
+
+    //기존에 생성한 categoryList 삭제해야함
+    let categoryItems = document.querySelectorAll(".CategoryItem");
+    if (categoryItems) {
+        categoryItems.forEach((item) => {
+            item.remove();
+        });
+    }
+
+    getCategoryList(selectDay);
 }
 
 // 이전달 버튼 클릭
@@ -143,5 +154,7 @@ function showSelectDate(selectDay) {
             "일 일정!";
 
         todayScheduleText.innerText = text;
+
+        //스케줄리스트 불러오기를 여기서 해야할듯?
     }
 }

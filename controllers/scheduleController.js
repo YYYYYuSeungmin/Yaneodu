@@ -1,3 +1,4 @@
+const { ajaxPrefilter } = require("jquery");
 const db = require("../models/db.js"); //DB모듈 로드
 
 //카테고리 생성하기
@@ -49,15 +50,24 @@ exports.getCategoryList = function (req, res) {
 exports.getScheduleList = function (req, res) {
     const categoryID = req.body.categoryID;
 
+    const year = req.body.year;
+    const month = req.body.month;
+    const day = req.body.day;
+
+    console.log("date >>> " + year + month + day);
+    // 날짜 정보를 기반으로 Date 객체 생성
+    let parseDate = formattedDate(year, month - 1, day);
+
     db.query(
-        "SELECT * FROM SCHEDULE WHERE category_id = ?",
-        [categoryID],
+        "SELECT * FROM SCHEDULE WHERE category_id = ? AND start_date <= ? AND ? <= end_date",
+        [categoryID, parseDate, parseDate],
         (error, results) => {
             if (error) {
                 console.error("Error retrieving schedule list: ", error);
                 return;
             }
-
+            console.log("parseDate >> " + parseDate);
+            console.log(results);
             res.json(results);
         }
     );
@@ -183,8 +193,6 @@ exports.scheduleCheckBox = function (req, res) {
 
 // recurringSchedule
 exports.recurringSchedule = function (req, res) {
-    console.log("RRRRRRRRRRRRRRRRRR");
-
     const scheduleID = req.body.scheduleID;
 
     const sYear = req.body.startYear;
@@ -194,8 +202,6 @@ exports.recurringSchedule = function (req, res) {
     const eYear = req.body.endYear;
     const eMonth = req.body.endMonth;
     const eDay = req.body.endDay;
-
-    console.log("recurringSchedule : " + sYear + sMonth + sDay);
 
     const startDate = formattedDate(sYear, sMonth - 1, sDay);
     const endDate = formattedDate(eYear, eMonth - 1, eDay);
@@ -214,6 +220,13 @@ exports.recurringSchedule = function (req, res) {
     );
 };
 
+/**
+ * 현재 날짜를 입력받아서, mysql에 삽입 및 비교가 가능한 date객체를 만들어서 반환해주는 함수
+ * @param {string} year 입력할 날짜
+ * @param {string} month 월
+ * @param {string} day 일
+ * @returns "YYYY-MM-DD" 형식으로 mysql의 포맷에 맞게 만들어진 date객체 반환
+ */
 function formattedDate(year, month, day) {
     const newDate = new Date(
         parseInt(year),
@@ -221,7 +234,7 @@ function formattedDate(year, month, day) {
         parseInt(day) + 1
     );
 
-    const mysqlFormattedDate = newDate.toISOString().slice(0, 10); // 'YYYY-MM-DD' 형식으로 변환
+    const mysqlFormattedDate = newDate.toISOString().slice(0, 10);
 
     return mysqlFormattedDate;
 }
