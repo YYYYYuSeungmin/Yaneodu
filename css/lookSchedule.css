@@ -1,0 +1,41 @@
+:root {
+    --skyblue: rgba(128, 172, 247, 0.5);
+    font-family: Helvetica, sans-serif;
+}
+
+.CategoryList.contentDiv {
+    width: 80%;
+    height: 90%;
+    margin-left: 10%;
+    margin-top: 0px;
+}
+
+.mainTitle {
+    display: flex;
+    background-color: var(--skyblue);
+    width: 80%;
+    height: 5%;
+    border-radius: 10px;
+    margin-top: 2%;
+    margin-left: 10%;
+    align-items: center;
+}
+.mainTitle > h1 {
+    margin: 0px;
+    padding-left: 5%;
+}
+.schedule-owner-div {
+    display: flex;
+    width: 70%;
+    height: 10%;
+    border-bottom: 1px rgba(128, 128, 128, 0.6);
+}
+.schedule-owner-icon {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background-color: lightskyblue;
+}
+.schedule-owner-div > h1 {
+    margin-left: 1%;
+}

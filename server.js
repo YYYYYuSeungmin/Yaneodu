@@ -12,6 +12,7 @@ const path = require("path");
 //라우터 모듈 가져오기
 const auth = require("./routes/authRoutes.js");
 const schedule = require("./routes/scheduleRoutes.js");
+const lookSchedule = require("./routes/lookScheduleRoutes.js");
 const FileStore = require("session-file-store")(session);
 
 //ejs 파일 설정
@@ -34,6 +35,7 @@ server.use(
 
 server.use("/auth", auth);
 server.use("/schedule", schedule);
+server.use("/lookSchedule", lookSchedule);
 
 //정적파일 설정
 server.use("/css", express.static(__dirname + "/css", { extensions: ["css"] }));
@@ -44,11 +46,6 @@ server.use(
         extensions: ["js"],
     })
 );
-
-//테스트중
-server.get("/test", function (req, res) {
-    res.sendFile(path.join(__dirname, "/views/test.html"));
-});
 
 // 루트로 접속시 보낼 홈페이지
 server.get(["/main", "/"], (req, res) => {

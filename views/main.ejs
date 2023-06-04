@@ -23,14 +23,13 @@
                     <li>
                         <a class="selected" href="/main" id="home">홈</a>
                     </li>
-                    <!-- 일정 둘러보기와 일기 둘러보기는 다른 페이지 생성 예정. -->
                     <li>
-                        <a href="/main/lookSchedule" id="lookSchedule"
+                        <a href="/auth/lookSchedule" id="lookSchedule"
                             >일정 둘러보기</a
                         >
                     </li>
                     <li>
-                        <a href="/main/lookDiary" id="lookDiary"
+                        <a href="/auth/lookDiary" id="lookDiary"
                             >일기 둘러보기</a
                         >
                     </li>
@@ -138,5 +137,10 @@
         <script src="/views/components/categoryModal.js"></script>
         <script src="/views/components/calendar.js"></script>
         <script src="/views/components/category.js"></script>
+        <!-- <script src="/views/components/schedule.js"></script> -->
+        <script>
+            // 카테고리를 불러오는 부분을 날짜 선택으로 넘겨야 할 듯?
+            // getCategoryList();
+        </script>
     </body>
 </html>

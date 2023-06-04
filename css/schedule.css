@@ -2,6 +2,10 @@
     --skyblue: rgba(128, 172, 247, 0.5);
     font-family: Helvetica, sans-serif;
 }
+input:disabled {
+    background: #f0f0f0;
+}
+
 .today-schedule-title {
     font-size: 32px;
 }
@@ -75,6 +79,20 @@
     height: 25px;
     border-radius: 20%;
 }
+
+.Btn {
+    width: 60px;
+    height: 30px;
+    border: 1px solid;
+    border-radius: 10px;
+    background-color: var(--skyblue);
+    box-shadow: 0 0px 10px rgba(0, 0, 0, 0.1);
+    color: #fff;
+    &:hover {
+        background-color: #fff;
+        color: var(--skyblue);
+    }
+}
 .scheduleBox {
     display: flex;
     align-items: center;
@@ -93,20 +111,6 @@
 
 .ctrlboxDiv {
     padding-right: 2%;
-}
-
-.Btn {
-    width: 60px;
-    height: 30px;
-    border: 1px solid;
-    border-radius: 10px;
-    background-color: var(--skyblue);
-    box-shadow: 0 0px 10px rgba(0, 0, 0, 0.1);
-    color: #fff;
-    &:hover {
-        background-color: #fff;
-        color: var(--skyblue);
-    }
 }
 
 .ctgBtn {

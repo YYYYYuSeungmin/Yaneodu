@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+        <title>일정 둘러보기 !!</title>
+
+        <link rel="stylesheet" href="/css/sidebar.css" />
+        <link rel="stylesheet" href="/css/main.css" />
+        <link rel="stylesheet" href="/css/lookSchedule.css" />
+        <link rel="stylesheet" href="/css/schedule.css" />
+    </head>
+    <body>
+        <div class="menuBar">
+            <a href="/main"><img class="logo" src="/img/yaneodu_logo.png" /></a>
+            <hr color="lightgray" width="80%" />
+            <nav>
+                <ul>
+                    <li>
+                        <a href="/main" id="home">홈</a>
+                    </li>
+                    <li>
+                        <a
+                            class="selected"
+                            href="/auth/lookSchedule"
+                            id="lookSchedule"
+                            >일정 둘러보기</a
+                        >
+                    </li>
+                    <li>
+                        <a href="/auth/lookDiary" id="lookDiary"
+                            >일기 둘러보기</a
+                        >
+                    </li>
+                </ul>
+            </nav>
+        </div>
+
+        <div class="mainScreen" id="mainScreen">
+            <!-- 회원들의 오늘 날짜의 공개 일정 조회해야 함 -->
+        </div>
+
+        <div class="followList">
+            <nav>
+                <h1>팔로우 목록</h1>
+                <hr width="80%" />
+                <p>팔로우 목록이 여기에 표시됩니다.</p>
+            </nav>
+        </div>
+
+        <script src="/views/components/lookSchedule.js"></script>
+        <script>
+            drawLookScheduleList();
+        </script>
+    </body>
+</html>

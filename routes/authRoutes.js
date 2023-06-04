@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const authController = require("../controllers/authController.js");
+const path = require("path");
 
 //auth 메인으로 접속
 router.get("/", authController.isOwner);
@@ -22,5 +23,10 @@ router.post("/register_process", authController.postRegister_process);
 
 //로그아웃 요청
 router.get("/logout", authController.getLogout);
+
+// lookSchedule
+router.get("/lookSchedule", function (req, res) {
+    return res.sendFile(path.join(__dirname, "/../views/lookSchedule.html"));
+});
 
 module.exports = router;
