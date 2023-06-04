@@ -54,7 +54,7 @@ exports.getScheduleList = function (req, res) {
     const month = req.body.month;
     const day = req.body.day;
 
-    console.log("date >>> " + year + month + day);
+    // console.log("date >>> " + year + month + day);
     // 날짜 정보를 기반으로 Date 객체 생성
     let parseDate = formattedDate(year, month - 1, day);
 
@@ -66,8 +66,8 @@ exports.getScheduleList = function (req, res) {
                 console.error("Error retrieving schedule list: ", error);
                 return;
             }
-            console.log("parseDate >> " + parseDate);
-            console.log(results);
+            // console.log("parseDate >> " + parseDate);
+            // console.log(results);
             res.json(results);
         }
     );
@@ -118,7 +118,7 @@ exports.insertSchedule = function (req, res) {
     const startDate = new Date(1990, 0, 1);
     const endDate = new Date(3000, 0, 1);
 
-    console.log("TESTING : " + categoryID + schedule + visibility);
+    // console.log("TESTING : " + categoryID + schedule + visibility);
 
     db.query(
         "INSERT INTO schedule(schedule, start_date, end_date, category_id, visibility) VALUES(?,?,?,?,?)",
@@ -175,18 +175,79 @@ exports.updateSchedule = function (req, res) {
 exports.scheduleCheckBox = function (req, res) {
     const scheduleID = req.body.scheduleID;
     const check = req.body.check;
+    const year = req.body.year;
+    const month = req.body.month;
+    const day = req.body.day;
 
-    console.log("checkBox Test :" + scheduleID + check);
+    const selectDay = formattedDate(year, month - 1, day);
+    //선택 날짜의 해당 일정이 완료되었었는지 확인
+    // console.log("Values Test >> " + scheduleID + " , " + selectDay);
     db.query(
-        "UPDATE schedule SET is_completed = ? WHERE schedule_id = ?",
-        [check, scheduleID],
+        "SELECT * from schedule_completed WHERE schedule_id = ? and date = ?",
+        [scheduleID, selectDay],
         (error, results) => {
             if (error) {
                 console.error("schedule checkBox error!!" + ", " + error);
                 return;
             }
 
-            res.json({ message: "schedule checkBox call success" });
+            //결과가 없음. => 해당 날짜로 해당 일정의 완료 내역이 없음을 의미.
+            if (results.length === 0) {
+                db.query(
+                    "INSERT INTO schedule_completed(schedule_id, date, is_completed) VALUES(?,?,?)",
+                    [scheduleID, selectDay, check],
+                    (error, results) => {
+                        if (error) {
+                            console.error(
+                                "schedule checkBox error!!!" + ", " + error
+                            );
+                            return;
+                        }
+                    }
+                );
+            } else {
+                // 결과가 있을 때 완료 여부를 변경
+                db.query(
+                    "UPDATE schedule_completed SET is_completed = ? WHERE schedule_id = ? AND date = ?",
+                    [check, scheduleID, selectDay],
+                    (error, results) => {
+                        if (error) {
+                            console.error(
+                                "schedule checkBox error!!" + ", " + error
+                            );
+                            return;
+                        }
+
+                        res.json({ message: "schedule checkBox call success" });
+                    }
+                );
+            }
+        }
+    );
+};
+
+//schedule-completed
+exports.scheduleCompleted = function (req, res) {
+    const scheduleID = req.body.scheduleID;
+    const year = req.body.year;
+    const month = req.body.month;
+    const day = req.body.day;
+
+    const selectDay = formattedDate(year, month - 1, day);
+
+    // console.log("date : " + scheduleID + ", " + selectDay);
+    //DB에 Date컬럼 추가해야 함
+    db.query(
+        "SELECT is_completed FROM schedule_completed WHERE schedule_id = ? AND date = ?",
+        [scheduleID, selectDay],
+        (error, result) => {
+            if (error) {
+                console.error("load schedule-completed error!!" + ", " + error);
+                return;
+            }
+            // console.log(result);
+
+            res.json(result);
         }
     );
 };

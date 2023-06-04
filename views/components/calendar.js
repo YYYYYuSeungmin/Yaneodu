@@ -85,7 +85,7 @@ function choiceDate(nowColumn) {
         month: nowMonth.getMonth() + 1,
         day: nowColumn.innerText,
     };
-    // console.log(selectDay);
+
     if (document.getElementsByClassName("choiceDay")[0]) {
         // 기존에 선택한 날짜가 있으면
         document

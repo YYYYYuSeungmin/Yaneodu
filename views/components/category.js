@@ -127,7 +127,7 @@ function drawCategory(data, selectDay) {
             data[i].category_id,
             selectDay,
             function (scheduleList) {
-                drawScheduleList(scheduleList, scheduleListDiv);
+                drawScheduleList(scheduleList, selectDay, scheduleListDiv);
             }
         );
         //일정 붙이기
@@ -241,7 +241,7 @@ function updateCategoryTitle(categoryID) {
     });
 }
 
-function drawScheduleList(scheduleList, scheduleListDiv) {
+function drawScheduleList(scheduleList, selectDay, scheduleListDiv) {
     if (scheduleList) {
         let scheduleListLength = Object.keys(scheduleList).length;
 
@@ -260,9 +260,40 @@ function drawScheduleList(scheduleList, scheduleListDiv) {
             let checkBox = document.createElement("input");
             checkBox.type = "checkbox";
             checkBox.classList.add("checkBox");
-            if (scheduleList[j].is_completed) {
-                checkBox.checked = true;
-            }
+            //scheduleList[j].is_completed가 아닌, scheduleList[j].schedule_id를 가지고
+            //ajax 요청을 해서, schedule_completed 테이블의 is_completed 요소가 해당 Date에 기록되어 있는지 확인해야 함.
+            $.ajax({
+                url: "schedule/scheduleCompleted",
+                method: "POST",
+                dataType: "json",
+                data: {
+                    scheduleID: scheduleList[j].schedule_id,
+                    year: selectDay.year,
+                    month: selectDay.month,
+                    day: selectDay.day,
+                },
+            })
+                .done(function (data) {
+                    if (data && data.length > 0) {
+                        // console.log(
+                        //     "GET SCHEDULE_COMPLETED >>> " +
+                        //         selectDay.year +
+                        //         selectDay.month +
+                        //         selectDay.day +
+                        //         ", " +
+                        //         data[0].is_completed
+                        // );
+                        if (data[0].is_completed === 1) {
+                            checkBox.checked = true;
+                        }
+                    } else {
+                        // console.log("No schedule completed data found");
+                    }
+                })
+                .fail(function (xhr, status, errorThrown) {
+                    alert("checkBox load Fail");
+                });
+
             //체크박스 이벤트리스너 지정
             checkBox.addEventListener("click", function () {
                 let flag = 0; // 0:false, 1:true
@@ -275,7 +306,13 @@ function drawScheduleList(scheduleList, scheduleListDiv) {
                     url: "/schedule/scheduleCheckBox",
                     method: "POST",
                     dataType: "json",
-                    data: { scheduleID: scheduleID, check: flag },
+                    data: {
+                        scheduleID: scheduleID,
+                        check: flag,
+                        year: selectDay.year,
+                        month: selectDay.month,
+                        day: selectDay.day,
+                    },
                 });
             });
             boxDiv.appendChild(checkBox);

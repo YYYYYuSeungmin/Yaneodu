@@ -35,4 +35,7 @@ router.post("/recurringSchedule", scheduleController.recurringSchedule);
 // router.resetAccessLevel
 router.post("/resetAccessLevel", scheduleController.resetAccessLevel);
 
+// router.scheduleCompleted
+router.post("/scheduleCompleted", scheduleController.scheduleCompleted);
+
 module.exports = router;
