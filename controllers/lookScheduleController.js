@@ -5,16 +5,20 @@ const db = require("../models/db.js");
 exports.getMutualFollowList = function (req, res) {
     const userID = req.session.userId;
 
-    console.log("userID >> " + userID);
+    // console.log("userID >> " + userID);
     db.query(
-        "SELECT id, nickname\
-        FROM account\
-        WHERE id != ?\
-        AND id IN (\
-        SELECT followee_id\
-        FROM follow\
-        WHERE follower_id = ?)",
-        [userID, userID],
+        "SELECT id, nickname " +
+            "FROM account " +
+            "WHERE id != ? " +
+            "AND id IN (" +
+            "SELECT followee_id " +
+            "FROM follow " +
+            "WHERE follower_id = ?) " +
+            "AND id IN (" +
+            "SELECT follower_id " +
+            "FROM follow " +
+            "WHERE followee_id = ?)",
+        [userID, userID, userID],
         (error, results) => {
             if (error) {
                 console.error(
@@ -86,14 +90,24 @@ exports.getNonMutualFollowList = function (req, res) {
     const userID = req.session.userId;
 
     db.query(
-        "SELECT id, nickname\
-        FROM account\
-        WHERE id != ?\
-        AND id NOT IN (\
-        SELECT followee_id\
-        FROM follow\
-        WHERE follower_id = ?)",
-        [userID, userID],
+        `
+        SELECT id, nickname
+        FROM account
+        WHERE id != ?
+        AND (
+            id NOT IN (
+                SELECT followee_id
+                FROM follow
+                WHERE follower_id = ?
+            )
+            OR
+            id NOT IN (
+                SELECT follower_id
+                FROM follow
+                WHERE followee_id = ?
+            )
+        )`,
+        [userID, userID, userID],
         (error, results) => {
             if (error) {
                 console.error(

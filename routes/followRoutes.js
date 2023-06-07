@@ -8,4 +8,7 @@ router.get("/getFollowList", controller.getFollowList);
 // addFollow
 router.post("/addFollow", controller.addFollow);
 
+// unFollow
+router.post("/unFollow", controller.unFollow);
+
 module.exports = router;

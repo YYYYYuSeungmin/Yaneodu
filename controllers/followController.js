@@ -34,16 +34,36 @@ exports.addFollow = function (req, res) {
     const followeeID = req.body.followee_id;
     const userID = req.session.userId;
 
+    console.log("애드팔로우");
     db.query(
         "INSERT INTO follow(follower_id, followee_id) VALUES(?,?)",
         [userID, followeeID],
         (error, results) => {
             if (error) {
-                console.error("loading FollowList error!!" + ", " + error);
+                console.error("add Follow error!!" + ", " + error);
                 return;
             }
 
             res.json(results);
+        }
+    );
+};
+
+// unFollow
+exports.unFollow = function (req, res) {
+    const followeeID = req.body.followee_id;
+    const userID = req.session.userId;
+
+    db.query(
+        "DELETE FROM follow WHERE follower_id = ? AND followee_id = ?",
+        [userID, followeeID],
+        (error, results) => {
+            if (error) {
+                console.error("Un Follow error!!" + ", " + error);
+                return;
+            }
+
+            res.json({ followeeID: followeeID });
         }
     );
 };

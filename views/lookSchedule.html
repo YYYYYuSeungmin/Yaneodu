@@ -11,7 +11,7 @@
         <link rel="stylesheet" href="/css/lookSchedule.css" />
         <link rel="stylesheet" href="/css/schedule.css" />
         <link rel="stylesheet" href="/css/follow.css" />
-        <script src="/views/components/follow.js"></script>
+        <link rel="stylesheet" href="/css/modal.css" />
     </head>
     <body>
         <div class="menuBar">
@@ -48,13 +48,16 @@
         <div class="followContainer">
             <div id="followTitle">
                 <h1>팔로우 목록</h1>
-                <button class="addFollowBtn">팔로우 추가</button>
+                <button class="addFollowBtn" id="addFollowBtn">
+                    팔로우 추가
+                </button>
                 <hr width="80%" />
             </div>
             <div id="followList" class="followList"></div>
         </div>
 
         <script src="/views/components/lookSchedule.js"></script>
+        <script src="/views/components/follow.js"></script>
         <script>
             drawLookScheduleList();
             window.addEventListener("load", function () {

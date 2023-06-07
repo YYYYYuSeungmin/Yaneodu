@@ -33,10 +33,12 @@ async function drawFollowList() {
 
         const deleteBtn = document.createElement("button");
         deleteBtn.classList.add("followDelBtn");
+        deleteBtn.id = followList[i].id;
         deleteBtn.innerText = "삭제";
-        deleteBtn.addEventListener("click", function (req, res) {
-            createAddFollowModal();
-        });
+        deleteBtn.addEventListener(
+            "click",
+            deleteBtnClickListener(followList[i].id)
+        );
 
         rightDiv.appendChild(deleteBtn);
 
@@ -61,4 +63,25 @@ async function getFollowList() {
                 reject(error);
             });
     });
+}
+
+function deleteBtnClickListener(followee_id) {
+    return function (event) {
+        unFollow(followee_id);
+    };
+}
+
+function unFollow(followee_id) {
+    $.ajax({
+        url: "/follow/unFollow",
+        method: "POST",
+        dataType: "json",
+        data: { followee_id: followee_id },
+    })
+        .done(function (data) {
+            location.reload();
+        })
+        .fail(function (jqXHR, textStatus, errorThrown) {
+            console.error("Un follow Fail:", errorThrown);
+        });
 }
