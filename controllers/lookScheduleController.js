@@ -1,3 +1,4 @@
+const f = require("session-file-store");
 const db = require("../models/db.js");
 
 // getMutualFollowList
@@ -99,20 +100,53 @@ exports.getUserNick = function (req, res) {
     );
 };
 
-// getPublicAccessLevelScheduleList
-exports.getPublicAccessLevelScheduleList = function (req, res) {
+// getNonMutualFollowList
+exports.getNonMutualFollowList = function (req, res) {
+    const userID = req.session.userId;
+
     db.query(
-        "SELECT * \
-        FROM schedule as S, category as C, \
-        schedule_completed as SC, account as A\
-        WHERE SC.is_completed = 1 AND SC.schedule_id = S.schedule_id AND S.visibility = 1 AND S.category_id = C.category_id AND C.id = A.id",
+        "SELECT id, nickname\
+        FROM account\
+        WHERE id != ?\
+        AND id NOT IN (\
+        SELECT followee_id\
+        FROM follow\
+        WHERE follower_id = ?)",
+        [userID, userID],
         (error, results) => {
             if (error) {
-                console.error("get User Nickname error!!" + ", " + error);
+                console.error(
+                    "get nonMutualFollowList List error!!" + ", " + error
+                );
                 return;
             }
 
-            console.log(results[0].nickname);
+            // console.log(results[0]);
+
+            res.json(results);
+        }
+    );
+};
+
+// getPublicScheduleOwner()
+exports.getPublicScheduleOwner = function (req, res) {
+    let today = new Date();
+    today = today.toISOString().slice(0, 10);
+    db.query(
+        "SELECT distinct(A.id), A.nickname \
+        FROM schedule as S, category as C, \
+        schedule_completed as SC, account as A\
+        WHERE SC.is_completed = 1 AND SC.schedule_id = S.schedule_id AND S.visibility = 1 AND S.category_id = C.category_id AND C.id = A.id AND SC.date = ?",
+        [today],
+        (error, results) => {
+            if (error) {
+                console.error(
+                    "get public scheduleOwner List error!!" + ", " + error
+                );
+                return;
+            }
+
+            // console.log(results[0]);
 
             res.json(results);
         }

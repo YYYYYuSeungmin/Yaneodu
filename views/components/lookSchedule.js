@@ -48,6 +48,7 @@ async function drawLookScheduleList() {
 
             const profileIcon = document.createElement("button");
             profileIcon.classList.add("schedule-owner-icon");
+            profileIcon.classList.add("follower");
 
             const profileName = document.createElement("h1");
 
@@ -96,9 +97,9 @@ async function drawLookScheduleList() {
 
                 categoryItem.appendChild(scheduleDiv);
 
-                console.log(
-                    "category : " + followedUserCategoryList[j].category
-                );
+                // console.log(
+                //     "category : " + followedUserCategoryList[j].category
+                // );
                 // 스케줄 리스트를 불러와야 함 맞팔 대상이라 accessLevel을 2로 설정
                 const scheduleList = await getScheduleList(
                     followedUserCategoryList[j].category_id,
@@ -113,7 +114,7 @@ async function drawLookScheduleList() {
 
                 // 스케줄을 그리기
                 for (let k = 0; k < scheduleListLength; k++) {
-                    console.log("schedule : " + scheduleList[k].schedule);
+                    // console.log("schedule : " + scheduleList[k].schedule);
                     const scheduleBox = document.createElement("div");
                     scheduleBox.classList.add("scheduleBox");
 
@@ -139,7 +140,6 @@ async function drawLookScheduleList() {
                     scheduleBox.appendChild(boxDiv);
 
                     scheduleDiv.appendChild(scheduleBox);
-                    console.log(scheduleList[k]);
                 }
             }
         }
@@ -147,18 +147,132 @@ async function drawLookScheduleList() {
         console.error("Error:", error);
     }
 
-    // 맞팔이 아닌 일반 유저에 대해서 일정 로드
+    // 맞팔이 아닌 일반 유저 ID리스트
 
-    //ajax 통신. 목적?
-    //=> 스케줄 중에 visibility = 1인 스케줄을 불러옴.
-    //당연히 그에 맞는 category정보도 필요하고, account 정보도 필요함.
-    //로직을 아직 떠올리지 못하겠음.
+    const publicScheduleOwnerList = await getNonMutualFollowList();
+    const publicScheduleOwnerListLength = Object.keys(
+        publicScheduleOwnerList
+    ).length;
+
+    //유저 ID리스트 수만큼 반복
+    for (let i = 0; i < publicScheduleOwnerListLength; i++) {
+        // console.log(publicScheduleOwnerList[i].id); //잘 받아왔는지 출력해보기
+
+        const categoryItem = document.createElement("div");
+        categoryItem.classList.add("CategoryItem");
+
+        contentDiv.appendChild(categoryItem);
+
+        // 누구의 일정인지 보여주는 부분
+        const profileDiv = document.createElement("div");
+        profileDiv.classList.add("schedule-owner-div");
+
+        const profileIcon = document.createElement("button");
+        profileIcon.classList.add("schedule-owner-icon");
+
+        const profileName = document.createElement("h1");
+
+        const userNick = publicScheduleOwnerList[i].nickname;
+
+        profileName.innerText = userNick;
+        profileDiv.appendChild(profileIcon);
+        profileDiv.appendChild(profileName);
+
+        categoryItem.appendChild(profileDiv);
+
+        // 카테고리 리스트 불러오기
+        const publicUserCategoryList = await getFollowedCategories(
+            publicScheduleOwnerList[i].id
+        );
+        const publicUserCategoryListLength = Object.keys(
+            publicUserCategoryList
+        ).length;
+
+        //카테고리가 없는 유저면 item삭제후 continue
+        if (publicUserCategoryListLength === 0) {
+            categoryItem.remove();
+            continue;
+        }
+
+        // 한명의 카테고리 리스트 만큼 반복
+        for (let j = 0; j < publicUserCategoryListLength; j++) {
+            // 하나의 카테고리 영역
+            const categoryDiv = document.createElement("div");
+            categoryDiv.classList.add("categoryTitleDiv");
+
+            //카테고리 영역을 contentList에 삽입
+            categoryItem.appendChild(categoryDiv);
+
+            //카테고리 타이틀 영역
+            const categoryTitleDiv = document.createElement("div");
+            categoryTitleDiv.classList.add("categoryTitleDiv");
+
+            //카테고리 이름 h1
+            const categoryTitle = document.createElement("p");
+            categoryTitle.classList.add("title");
+            categoryTitle.innerText = publicUserCategoryList[j].category;
+
+            categoryTitleDiv.appendChild(categoryTitle);
+            categoryDiv.appendChild(categoryTitleDiv);
+
+            // 하나의 카테고리에 일정 리스트가 들어가는 영역
+            const scheduleDiv = document.createElement("div");
+            scheduleDiv.classList.add("scheduleListDiv");
+
+            categoryItem.appendChild(scheduleDiv);
+
+            // console.log("category : " + publicUserCategoryList[j].category);
+            // 스케줄 리스트를 불러와야 함 맞팔 대상이라 accessLevel을 2로 설정
+            const scheduleList = await getScheduleList(
+                publicUserCategoryList[j].category_id,
+                1
+            );
+            //만약 카테고리에 아무 일정이 없다면 해당 카테고리를 제거한다.
+            const scheduleListLength = Object.keys(scheduleList).length;
+            // console.log("scheduleListLength : " + scheduleListLength);
+            if (scheduleListLength === 0) {
+                categoryItem.remove();
+                continue;
+            }
+
+            // 스케줄을 그리기
+            for (let k = 0; k < scheduleListLength; k++) {
+                // console.log("schedule : " + scheduleList[k].schedule);
+                const scheduleBox = document.createElement("div");
+                scheduleBox.classList.add("scheduleBox");
+
+                //체크박스 및 일정 명이 들어갈 영역
+                let boxDiv = document.createElement("div");
+                boxDiv.classList.add("left-align");
+                boxDiv.classList.add("boxDiv");
+
+                //체크박스 만들기
+                let checkBox = document.createElement("input");
+                checkBox.type = "checkbox";
+                checkBox.classList.add("checkBox");
+                checkBox.checked = true;
+                checkBox.disabled = true;
+
+                //일정 이름을 가진 p태그
+                let schedule = document.createElement("p");
+                schedule.innerText = scheduleList[k].schedule;
+
+                boxDiv.appendChild(checkBox);
+                boxDiv.appendChild(schedule);
+
+                scheduleBox.appendChild(boxDiv);
+
+                scheduleDiv.appendChild(scheduleBox);
+            }
+        }
+    }
 }
 
-async function getPublicAccessLevelScheduleList() {
+// 맞팔이 아닌 모든 상대ID 가져오기
+async function getNonMutualFollowList() {
     return new Promise(function (resolve, reject) {
         $.ajax({
-            url: "/lookSchedule/getPublicAccessLevelScheduleList",
+            url: "/lookSchedule/getNonMutualFollowList",
             method: "GET",
         })
             .done(function (data) {

@@ -14,4 +14,10 @@ router.post("/getScheduleList", controller.getScheduleList);
 // /getUserNick
 router.post("/getUserNick", controller.getUserNick);
 
+// /getPublicScheduleOwner
+router.get("/getPublicScheduleOwner", controller.getPublicScheduleOwner);
+
+// getNonMutualFollowList
+router.get("/getNonMutualFollowList", controller.getNonMutualFollowList);
+
 module.exports = router;

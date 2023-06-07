@@ -126,3 +126,7 @@ input:disabled {
     font-weight: bold;
     margin-left: 5%;
 }
+
+.follower {
+    background-color: rgba(155, 246, 147, 0.929);
+}
