@@ -11,9 +11,6 @@ router.post("/getFollowedCategories", controller.getFollowedCategories);
 // /getScheduleList
 router.post("/getScheduleList", controller.getScheduleList);
 
-// /getUserNick
-router.post("/getUserNick", controller.getUserNick);
-
 // /getPublicScheduleOwner
 router.get("/getPublicScheduleOwner", controller.getPublicScheduleOwner);
 

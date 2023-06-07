@@ -5,14 +5,15 @@ const db = require("../models/db.js");
 exports.getMutualFollowList = function (req, res) {
     const userID = req.session.userId;
 
+    console.log("userID >> " + userID);
     db.query(
-        "SELECT follower_id\
+        "SELECT id, nickname\
+        FROM account\
+        WHERE id != ?\
+        AND id IN (\
+        SELECT followee_id\
         FROM follow\
-        WHERE follower_id IN (\
-            SELECT followee_id\
-            FROM follow\
-            WHERE follower_id = ?\
-        ) AND followee_id = ?;",
+        WHERE follower_id = ?)",
         [userID, userID],
         (error, results) => {
             if (error) {
@@ -21,8 +22,6 @@ exports.getMutualFollowList = function (req, res) {
                 );
                 return;
             }
-
-            // console.log(results);
 
             res.json(results);
         }
@@ -57,7 +56,11 @@ exports.getScheduleList = function (req, res) {
     const accessLevel = req.body.level;
 
     let today = new Date();
-    today = today.toISOString().slice(0, 10);
+    today = formattedDate(
+        today.getFullYear(),
+        today.getMonth(),
+        today.getDate()
+    );
     //오늘 날짜로 완료된 일정만 불러와야 함
     db.query(
         "SELECT * \
@@ -72,28 +75,6 @@ exports.getScheduleList = function (req, res) {
                 );
                 return;
             }
-
-            // console.log(results[0]);
-
-            res.json(results);
-        }
-    );
-};
-
-// getUserNick
-exports.getUserNick = function (req, res) {
-    const userID = req.body.userID;
-
-    db.query(
-        "SELECT nickname FROM account WHERE id = ?",
-        [userID],
-        (error, results) => {
-            if (error) {
-                console.error("get User Nickname error!!" + ", " + error);
-                return;
-            }
-
-            console.log(results[0].nickname);
 
             res.json(results);
         }
@@ -121,8 +102,6 @@ exports.getNonMutualFollowList = function (req, res) {
                 return;
             }
 
-            // console.log(results[0]);
-
             res.json(results);
         }
     );
@@ -130,8 +109,12 @@ exports.getNonMutualFollowList = function (req, res) {
 
 // getPublicScheduleOwner()
 exports.getPublicScheduleOwner = function (req, res) {
-    let today = new Date();
-    today = today.toISOString().slice(0, 10);
+    let today = new Date(Date.now());
+    today = formattedDate(
+        today.getFullYear(),
+        today.getMonth(),
+        today.getDate()
+    );
     db.query(
         "SELECT distinct(A.id), A.nickname \
         FROM schedule as S, category as C, \
@@ -145,8 +128,6 @@ exports.getPublicScheduleOwner = function (req, res) {
                 );
                 return;
             }
-
-            // console.log(results[0]);
 
             res.json(results);
         }

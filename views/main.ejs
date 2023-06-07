@@ -11,6 +11,7 @@
         <link rel="stylesheet" href="/css/modal.css" />
         <link rel="stylesheet" href="/css/calendar.css" />
         <link rel="stylesheet" href="/css/schedule.css" />
+        <link rel="stylesheet" href="/css/follow.css" />
 
         <title>Main</title>
     </head>
@@ -42,12 +43,15 @@
             </form>
         </div>
 
-        <div class="followList">
-            <nav>
+        <div class="followContainer">
+            <div id="followTitle">
                 <h1>팔로우 목록</h1>
+                <button class="addFollowBtn" id="addFollowBtn">
+                    팔로우 추가
+                </button>
                 <hr width="80%" />
-                <p>팔로우 목록이 여기에 표시됩니다.</p>
-            </nav>
+            </div>
+            <div id="followList" class="followList"></div>
         </div>
 
         <div class="mainScreen">
@@ -138,10 +142,11 @@
         <script src="/views/components/categoryModal.js"></script>
         <script src="/views/components/calendar.js"></script>
         <script src="/views/components/category.js"></script>
-        <!-- <script src="/views/components/schedule.js"></script> -->
+        <script src="/views/components/follow.js"></script>
         <script>
-            // 카테고리를 불러오는 부분을 날짜 선택으로 넘겨야 할 듯?
-            // getCategoryList();
+            window.addEventListener("load", function () {
+                drawFollowList();
+            });
         </script>
     </body>
 </html>

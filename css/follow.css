@@ -1,0 +1,77 @@
+.followContainer {
+    padding: 0px;
+    margin: 0px;
+}
+.followContainer > .followTitle {
+    height: 20%;
+    width: 100%;
+}
+.followContainer > .followList {
+    height: 70%;
+    width: 100%;
+    top: 25%;
+}
+
+.followBox {
+    display: flex;
+    padding-top: 5%;
+}
+
+.followInfo {
+    display: flex;
+    align-items: left;
+    flex: 3;
+    padding-left: 10%;
+}
+
+.followInfo > h1 {
+    margin: 0px;
+    padding-top: 15px;
+}
+
+.followDel {
+    flex: 0;
+    margin-right: 10%;
+}
+
+.followeeIcon {
+    left: 40px;
+    top: 5px;
+    height: 60px;
+    width: 60px;
+    margin-right: 2%;
+    border-radius: 50%;
+    background-color: lightskyblue;
+}
+
+.followDelBtn {
+    margin-top: 17px;
+    width: 60px;
+    height: 30px;
+    border: 1px solid;
+    border-radius: 10px;
+    background-color: var(--skyblue);
+    box-shadow: 0 0px 10px rgba(0, 0, 0, 0.1);
+    color: #fff;
+    &:hover {
+        background-color: #fff;
+        color: var(--skyblue);
+    }
+}
+.addFollowBtn {
+    position: absolute;
+    right: 10%;
+    top: 6%;
+    font-size: 16px;
+    width: 100px;
+    height: 40px;
+    border: 1px solid;
+    border-radius: 10px;
+    background-color: var(--skyblue);
+    box-shadow: 0 0px 10px rgba(0, 0, 0, 0.1);
+    color: #fff;
+    &:hover {
+        background-color: #fff;
+        color: var(--skyblue);
+    }
+}

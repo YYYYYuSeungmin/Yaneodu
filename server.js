@@ -13,6 +13,7 @@ const path = require("path");
 const auth = require("./routes/authRoutes.js");
 const schedule = require("./routes/scheduleRoutes.js");
 const lookSchedule = require("./routes/lookScheduleRoutes.js");
+const followRoutes = require("./routes/followRoutes.js");
 const FileStore = require("session-file-store")(session);
 
 //ejs 파일 설정
@@ -36,6 +37,7 @@ server.use(
 server.use("/auth", auth);
 server.use("/schedule", schedule);
 server.use("/lookSchedule", lookSchedule);
+server.use("/follow", followRoutes);
 
 //정적파일 설정
 server.use("/css", express.static(__dirname + "/css", { extensions: ["css"] }));

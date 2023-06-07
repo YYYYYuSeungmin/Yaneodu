@@ -1,5 +1,4 @@
 // 둘러보기 페이지에 일정 그리는 함수
-// 둘러보기 페이지에 일정 그리는 함수
 async function drawLookScheduleList() {
     //일정들이 들어갈 최상위 컨테이너
     const mainScreen = document.getElementById("mainScreen");
@@ -51,12 +50,7 @@ async function drawLookScheduleList() {
             profileIcon.classList.add("follower");
 
             const profileName = document.createElement("h1");
-
-            const userNick = await getUserNick(
-                multualFollowList[i].follower_id
-            );
-
-            profileName.innerText = userNick[0].nickname;
+            profileName.innerText = multualFollowList[i].nickname;
             profileDiv.appendChild(profileIcon);
             profileDiv.appendChild(profileName);
 
@@ -64,11 +58,16 @@ async function drawLookScheduleList() {
 
             // 팔로워 마다 카테고리 리스트를 받아와야 함
             const followedUserCategoryList = await getFollowedCategories(
-                multualFollowList[i].follower_id
+                multualFollowList[i].id
             );
             const followedUserCategoryListLength = Object.keys(
                 followedUserCategoryList
             ).length;
+
+            if (followedUserCategoryListLength === 0) {
+                categoryItem.remove();
+                continue;
+            }
 
             // 팔로워 한명의 카테고리 리스트 만큼 반복
             for (let j = 0; j < followedUserCategoryListLength; j++) {
@@ -97,24 +96,21 @@ async function drawLookScheduleList() {
 
                 categoryItem.appendChild(scheduleDiv);
 
-                // console.log(
-                //     "category : " + followedUserCategoryList[j].category
-                // );
                 // 스케줄 리스트를 불러와야 함 맞팔 대상이라 accessLevel을 2로 설정
                 const scheduleList = await getScheduleList(
                     followedUserCategoryList[j].category_id,
                     2
                 );
-                //만약 카테고리에 아무 일정이 없다면 해당 카테고리를 제거한다.
+
                 const scheduleListLength = Object.keys(scheduleList).length;
 
                 if (scheduleListLength === 0) {
-                    categoryItem.remove();
+                    categoryDiv.remove();
+                    continue;
                 }
 
                 // 스케줄을 그리기
                 for (let k = 0; k < scheduleListLength; k++) {
-                    // console.log("schedule : " + scheduleList[k].schedule);
                     const scheduleBox = document.createElement("div");
                     scheduleBox.classList.add("scheduleBox");
 
@@ -148,7 +144,6 @@ async function drawLookScheduleList() {
     }
 
     // 맞팔이 아닌 일반 유저 ID리스트
-
     const publicScheduleOwnerList = await getNonMutualFollowList();
     const publicScheduleOwnerListLength = Object.keys(
         publicScheduleOwnerList
@@ -156,8 +151,6 @@ async function drawLookScheduleList() {
 
     //유저 ID리스트 수만큼 반복
     for (let i = 0; i < publicScheduleOwnerListLength; i++) {
-        // console.log(publicScheduleOwnerList[i].id); //잘 받아왔는지 출력해보기
-
         const categoryItem = document.createElement("div");
         categoryItem.classList.add("CategoryItem");
 
@@ -188,10 +181,8 @@ async function drawLookScheduleList() {
             publicUserCategoryList
         ).length;
 
-        //카테고리가 없는 유저면 item삭제후 continue
-        if (publicUserCategoryListLength === 0) {
+        if (publicScheduleOwnerListLength === 0) {
             categoryItem.remove();
-            continue;
         }
 
         // 한명의 카테고리 리스트 만큼 반복
@@ -221,23 +212,21 @@ async function drawLookScheduleList() {
 
             categoryItem.appendChild(scheduleDiv);
 
-            // console.log("category : " + publicUserCategoryList[j].category);
-            // 스케줄 리스트를 불러와야 함 맞팔 대상이라 accessLevel을 2로 설정
             const scheduleList = await getScheduleList(
                 publicUserCategoryList[j].category_id,
                 1
             );
+
             //만약 카테고리에 아무 일정이 없다면 해당 카테고리를 제거한다.
             const scheduleListLength = Object.keys(scheduleList).length;
-            // console.log("scheduleListLength : " + scheduleListLength);
+
             if (scheduleListLength === 0) {
-                categoryItem.remove();
+                categoryDiv.remove();
                 continue;
             }
 
             // 스케줄을 그리기
             for (let k = 0; k < scheduleListLength; k++) {
-                // console.log("schedule : " + scheduleList[k].schedule);
                 const scheduleBox = document.createElement("div");
                 scheduleBox.classList.add("scheduleBox");
 
@@ -322,6 +311,7 @@ async function getFollowedCategories(followedUserID) {
 
 // 카테고리 id를 가지고 해당 카테고리의 일정 가져오기 (level을 넘겨주어 맞팔상태인지 아닌지 판별)
 async function getScheduleList(categoryID, level) {
+    // console.log("getSchedule >> " + categoryID + ", 레벨 : " + level);
     return new Promise(function (resolve, reject) {
         $.ajax({
             url: "/lookSchedule/getScheduleList",
@@ -330,24 +320,10 @@ async function getScheduleList(categoryID, level) {
             data: { categoryID: categoryID, level: level },
         })
             .done(function (data) {
-                resolve(data);
-            })
-            .fail(function (error) {
-                reject(error);
-            });
-    });
-}
+                // if (data.length) {
+                //     console.log("resolve date >> " + data[0].schedule);
+                // }
 
-// 유저의 id로 닉네임을 요청
-async function getUserNick(userID) {
-    return new Promise(function (resolve, reject) {
-        $.ajax({
-            url: "/lookSchedule/getUserNick",
-            method: "POST",
-            dataType: "json",
-            data: { userID: userID },
-        })
-            .done(function (data) {
                 resolve(data);
             })
             .fail(function (error) {

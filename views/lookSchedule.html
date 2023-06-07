@@ -10,6 +10,8 @@
         <link rel="stylesheet" href="/css/main.css" />
         <link rel="stylesheet" href="/css/lookSchedule.css" />
         <link rel="stylesheet" href="/css/schedule.css" />
+        <link rel="stylesheet" href="/css/follow.css" />
+        <script src="/views/components/follow.js"></script>
     </head>
     <body>
         <div class="menuBar">
@@ -43,17 +45,21 @@
 
         <div class="mainScreen" id="mainScreen"></div>
 
-        <div class="followList">
-            <nav>
+        <div class="followContainer">
+            <div id="followTitle">
                 <h1>팔로우 목록</h1>
+                <button class="addFollowBtn">팔로우 추가</button>
                 <hr width="80%" />
-                <p>팔로우 목록이 여기에 표시됩니다.</p>
-            </nav>
+            </div>
+            <div id="followList" class="followList"></div>
         </div>
 
         <script src="/views/components/lookSchedule.js"></script>
         <script>
             drawLookScheduleList();
+            window.addEventListener("load", function () {
+                drawFollowList();
+            });
         </script>
     </body>
 </html>
